@@ -3,12 +3,11 @@
 define(function () {
     'use strict';
 
-    var BatchDeleteController = function ($scope, $state, $stateParams, $location, $window, DeleteQueries, notification, view) {
+    var BatchDeleteController = function ($scope, $state, $stateParams, $location, DeleteQueries, notification, view) {
         this.$scope = $scope;
         this.$state = $state;
         this.$stateParams = $stateParams;
         this.$location = $location;
-        this.$window = $window;
         this.DeleteQueries = DeleteQueries;
         this.notification = notification;
         this.view = view;
@@ -27,10 +26,16 @@ define(function () {
     BatchDeleteController.prototype.batchDelete = function () {
         var notification = this.notification,
             $state = this.$state,
-            entityName = this.entity.name();
+            _this = this;
 
         this.DeleteQueries.batchDelete(this.view, this.entityIds).then(function () {
-            $state.go($state.get('list'), { 'entity': entityName });
+            $state.go($state.get('list'), {
+                entity: _this.entity.name(),
+                page: _this.$stateParams.page,
+                search: _this.$stateParams.search,
+                sortField: _this.$stateParams.sortField,
+                sortDir: _this.$stateParams.sortDir
+            });
             notification.log('Elements successfully deleted.', { addnCls: 'humane-flatty-success' });
         }, function (response) {
             // @TODO: share this method when splitting controllers
@@ -44,7 +49,13 @@ define(function () {
     };
 
     BatchDeleteController.prototype.back = function () {
-        this.$window.history.back();
+        this.$state.go(this.$state.get('list'), {
+            entity: this.entity.name(),
+            page: this.$stateParams.page,
+            search: this.$stateParams.search,
+            sortField: this.$stateParams.sortField,
+            sortDir: this.$stateParams.sortDir
+        });
     };
 
     BatchDeleteController.prototype.destroy = function () {
@@ -52,11 +63,10 @@ define(function () {
         this.$state = undefined;
         this.$stateParams = undefined;
         this.$location = undefined;
-        this.$window = undefined;
         this.DeleteQueries = undefined;
     };
 
-    BatchDeleteController.$inject = ['$scope', '$state', '$stateParams', '$location', '$window', 'DeleteQueries', 'notification', 'view'];
+    BatchDeleteController.$inject = ['$scope', '$state', '$stateParams', '$location', 'DeleteQueries', 'notification', 'view'];
 
     return BatchDeleteController;
 });
