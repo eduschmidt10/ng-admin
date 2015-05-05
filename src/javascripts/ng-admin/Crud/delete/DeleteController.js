@@ -3,10 +3,9 @@
 define(function () {
     'use strict';
 
-    var DeleteController = function ($scope, $state, $stateParams, DeleteQueries, notification, params, view, entry) {
+    var DeleteController = function ($scope, $state, DeleteQueries, notification, params, view, entry) {
         this.$scope = $scope;
         this.$state = $state;
-        this.$stateParams = $stateParams;
         this.DeleteQueries = DeleteQueries;
         this.entityLabel = params.entity;
         this.entityId = params.id;
@@ -29,10 +28,10 @@ define(function () {
         this.DeleteQueries.deleteOne(this.view, this.entityId).then(function () {
             $state.go($state.get('list'), {
                 entity: _this.entity.name(),
-                page: _this.$stateParams.page,
-                search: _this.$stateParams.search,
-                sortField: _this.$stateParams.sortField,
-                sortDir: _this.$stateParams.sortDir
+                page: _this.$state.params.page,
+                search: _this.$state.params.search,
+                sortField: _this.$state.params.sortField,
+                sortDir: _this.$state.params.sortDir
             });
             notification.log('Element successfully deleted.', { addnCls: 'humane-flatty-success' });
         }, function (response) {
@@ -50,23 +49,22 @@ define(function () {
         this.$state.go(this.$state.get('edit'), {
             entity: this.entity.name(),
             id: this.entityId,
-            page: this.$stateParams.page,
-            search: this.$stateParams.search,
-            sortField: this.$stateParams.sortField,
-            sortDir: this.$stateParams.sortDir
+            page: this.$state.params.page,
+            search: this.$state.params.search,
+            sortField: this.$state.params.sortField,
+            sortDir: this.$state.params.sortDir
         });
     };
 
     DeleteController.prototype.destroy = function () {
         this.$scope = undefined;
         this.$state = undefined;
-        this.$stateParams = undefined;
         this.DeleteQueries = undefined;
         this.view = undefined;
         this.entity = undefined;
     };
 
-    DeleteController.$inject = ['$scope', '$state', '$stateParams', 'DeleteQueries', 'notification', 'params', 'view', 'entry'];
+    DeleteController.$inject = ['$scope', '$state', 'DeleteQueries', 'notification', 'params', 'view', 'entry'];
 
     return DeleteController;
 });
