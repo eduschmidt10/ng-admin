@@ -1,31 +1,25 @@
-/*global define*/
+var dashboardPanelView = require('../../view/dashboard-panel.html');
 
-define(function (require) {
-    'use strict';
+function maDashboardPanel($location) {
+    return {
+        restrict: 'E',
+        scope: {
+            label: '@',
+            viewName: '@',
+            entries: '=',
+            fields: '&',
+            entity: '&',
+            perPage: '='
+        },
+        link: function(scope) {
+            scope.gotoList = function () {
+                $location.path(scope.entity().name() + '/list/');
+            };
+        },
+        template: dashboardPanelView
+    };
+}
 
-    var dashboardPanelView = require('text!../../view/dashboard-panel.html');
+maDashboardPanel.$inject = ['$location'];
 
-    function maDashboardPanel($location) {
-        return {
-            restrict: 'E',
-            scope: {
-                label: '@',
-                viewName: '@',
-                entries: '=',
-                fields: '&',
-                entity: '&',
-                perPage: '='
-            },
-            link: function(scope) {
-                scope.gotoList = function () {
-                    $location.path(scope.entity().name() + '/list/');
-                };
-            },
-            template: dashboardPanelView
-        };
-    }
-
-    maDashboardPanel.$inject = ['$location'];
-
-    return maDashboardPanel;
-});
+module.exports = maDashboardPanel;

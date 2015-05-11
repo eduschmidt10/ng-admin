@@ -1,25 +1,18 @@
-/*global define*/
+/**
+ * @param {$q}          $q
+ * @param {Restangular} Restangular
+ * @param {Application} Configuration
+ * @constructor
+ */
+function Queries($q, Restangular, Configuration, PromisesResolver) {
+    this.$q = $q;
+    this.Restangular = Restangular;
+    this.config = Configuration();
+    this.PromisesResolver = PromisesResolver;
 
-define(function () {
-    'use strict';
+    this.Restangular.setFullResponse(true);  // To get also the headers
+}
 
-    /**
-     *
-     * @param {$q}          $q
-     * @param {Restangular} Restangular
-     * @param {Application} Configuration
-     * @constructor
-     */
-    function Queries($q, Restangular, Configuration, PromisesResolver) {
-        this.$q = $q;
-        this.Restangular = Restangular;
-        this.config = Configuration();
-        this.PromisesResolver = PromisesResolver;
+Queries.$inject = ['$q', 'Restangular', 'NgAdminConfiguration', 'PromisesResolver'];
 
-        this.Restangular.setFullResponse(true);  // To get also the headers
-    }
-
-    Queries.$inject = ['$q', 'Restangular', 'NgAdminConfiguration', 'PromisesResolver'];
-
-    return Queries;
-});
+module.exports = Queries;
