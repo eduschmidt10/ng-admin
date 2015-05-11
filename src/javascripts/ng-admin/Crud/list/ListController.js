@@ -3,13 +3,13 @@
 define(function () {
     'use strict';
 
-    var ListController = function ($scope, $stateParams, $filter, $location, $anchorScroll, RetrieveQueries, progression, view, dataStore, totalItems) {
+    var ListController = function ($scope, $stateParams, $filter, $location, $anchorScroll, ReadQueries, progression, view, dataStore, totalItems) {
         this.$scope = $scope;
         this.$stateParams = $stateParams;
         this.$filter = $filter;
         this.$location = $location;
         this.$anchorScroll = $anchorScroll;
-        this.RetrieveQueries = RetrieveQueries;
+        this.ReadQueries = ReadQueries;
         this.progression = progression;
         this.view = view;
         this.entity = view.getEntity();
@@ -46,7 +46,7 @@ define(function () {
 
         progression.start();
 
-        this.RetrieveQueries
+        this.ReadQueries
             .getAll(this.view, page, true, filters, this.sortField, this.sortDir)
             .then(function (nextData) {
                 progression.done();
@@ -70,7 +70,7 @@ define(function () {
         this.dataStore = undefined;
     };
 
-    ListController.$inject = ['$scope', '$stateParams', '$filter', '$location', '$anchorScroll', 'RetrieveQueries', 'progression', 'view', 'dataStore', 'totalItems'];
+    ListController.$inject = ['$scope', '$stateParams', '$filter', '$location', '$anchorScroll', 'ReadQueries', 'progression', 'view', 'dataStore', 'totalItems'];
 
     return ListController;
 });
