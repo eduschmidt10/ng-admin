@@ -73,7 +73,7 @@ function routing($stateProvider) {
             controllerAs: 'showController',
             templateProvider: templateProvider('ShowView', showTemplate),
             params: {
-                entity: {},
+                entity: null,
                 id: null,
                 sortField: null,
                 sortDir: null
@@ -129,7 +129,7 @@ function routing($stateProvider) {
             controllerAs: 'formController',
             templateProvider: templateProvider('EditView', editTemplate),
             params: {
-                entity: {},
+                entity: null,
                 id: null,
                 sortField: null,
                 sortDir: null
@@ -180,7 +180,7 @@ function routing($stateProvider) {
             controllerAs: 'batchDeleteController',
             templateProvider: templateProvider('BatchDeleteView', batchDeleteTemplate),
             params: {
-                entity: {},
+                entity: null,
                 ids: [],
             },
             resolve: {

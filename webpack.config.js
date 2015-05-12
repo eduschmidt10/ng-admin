@@ -11,13 +11,13 @@ module.exports = {
         'ng-admin': sources
     },
     output: {
-        filename: "build/ng-admin.min.js",
-        publicPath: "http://localhost:8080/"
+        publicPath: "http://locamlhost:8080/",
+        filename: "build/ng-admin.min.js"
     },
     module: {
         loaders: [
             { test: /es6.+\.js$/, loader: 'babel-loader' },
-            { test: /\.html$/, loader: 'ngtemplate-loader!html' }
+            { test: /\.html$/, loader: 'html' }
         ]
     }
 };
